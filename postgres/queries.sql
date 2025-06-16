@@ -1,4 +1,3 @@
--- 📌 Requêtes SQL pour répondre aux questions du projet (PostgreSQL)
 -- 1. Quels sont les hébergements d’une ville donnée (ex: Montréal)
 SELECT
     h.*
@@ -82,7 +81,7 @@ GROUP BY
 -- 9. Moyenne des notes des hébergements par ville
 SELECT
     v.nom AS ville,
-    ROUND(AVG(h.note), 2) AS note_moyenne
+    ROUND(AVG(h.note)::numeric, 2) AS note_moyenne
 FROM
     Ville v
     JOIN Hebergement h ON v.id = h.ville_id
