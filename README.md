@@ -40,6 +40,7 @@ Chaque technologie est utilisée là où elle est la plus adaptée, avec pour bu
 - `drop.sql` : suppression des tables
 - `queries.sql` : requêtes SQL
 - `triggers.sql` : triggers de cohérence
+- `Updates.sql` : mise à jour 
 
 ### 📦 MongoDB
 
@@ -103,6 +104,7 @@ Placez-vous dans le dossier où sont les fichiers `.sql` (ou précisez le chemin
 \i triggers.sql
 \i insert.sql
 \i queries.sql
+\i Updates.sql
 ```
 
 > 💡 Vous pouvez exécuter `delete.sql` ou `drop.sql` à tout moment si vous souhaitez réinitialiser ou supprimer les données.
