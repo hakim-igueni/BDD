@@ -33,5 +33,6 @@ WHERE nom = 'Auberge du Vieux-Port';
 
 -- 6. Mise à jour du type d’hébergement
 UPDATE Hebergement
-SET type = 'Maison d\'hôtes'
+SET type = 'Maison d''hôtes'
 WHERE nom = 'Sea Breeze Lodge';
+
