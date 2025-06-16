@@ -17,21 +17,12 @@ WHERE
     v.nom = 'Montreal';
 
 -- 3. Liste des activités entre avril et juin (inclus)
-SELECT
-    *
-FROM
-    Activite
-WHERE
-    EXTRACT(
-        MONTH
-        FROM
-            date_debut
-    ) <= 6
-    AND EXTRACT(
-        MONTH
-        FROM
-            date_fin
-    ) >= 4;
+SELECT *
+FROM Activite
+WHERE 
+    EXTRACT(MONTH FROM date_debut) >= 4
+    AND EXTRACT(MONTH FROM date_fin) <= 6;
+
 
 -------------------------------------REQUETES ADDITIONNELLES--------------------------------------
 
