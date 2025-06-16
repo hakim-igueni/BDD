@@ -1,59 +1,52 @@
--- Création des tables relationnelles du projet
--- Table Ville
-CREATE TABLE Ville (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION
-);
+-- 📄 create.sql — Définition des tables avec ON DELETE CASCADE
+CREATE TABLE
+    Ville (
+        id SERIAL PRIMARY KEY,
+        nom TEXT NOT NULL,
+        latitude FLOAT,
+        longitude FLOAT
+    );
 
--- Table Hébergement
-CREATE TABLE Hebergement (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    type TEXT,
-    prix DECIMAL(8, 2) CHECK (prix >= 0),
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
-    note FLOAT,
-    -- moyenne des notes d'avis
-    ville_id INT REFERENCES Ville(id)
-);
+CREATE TABLE
+    Hebergement (
+        id SERIAL PRIMARY KEY,
+        nom TEXT NOT NULL,
+        type TEXT,
+        prix NUMERIC,
+        latitude FLOAT,
+        longitude FLOAT,
+        note NUMERIC,
+        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE
+    );
 
--- Table Point d’intérêt
-CREATE TABLE PointInteret (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    description_courte TEXT,
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
-    ville_id INT REFERENCES Ville(id)
-);
+CREATE TABLE
+    PointInteret (
+        id SERIAL PRIMARY KEY,
+        nom TEXT NOT NULL,
+        description_courte TEXT,
+        latitude FLOAT,
+        longitude FLOAT,
+        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE
+    );
 
--- Table Activité
-CREATE TABLE Activite (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    description TEXT,
-    prix DECIMAL(8, 2) CHECK (prix >= 0),
-    duree INT CHECK (duree > 0),
-    -- durée en minutes
-    date_debut DATE,
-    date_fin DATE,
-    CHECK (date_debut <= date_fin),
-    poi_id INT REFERENCES PointInteret(id)
-);
+CREATE TABLE
+    Activite (
+        id SERIAL PRIMARY KEY,
+        nom TEXT NOT NULL,
+        description TEXT,
+        prix NUMERIC,
+        duree INT,
+        date_debut DATE,
+        date_fin DATE,
+        poi_id INT REFERENCES PointInteret (id) ON DELETE CASCADE
+    );
 
--- Table Avis
-CREATE TABLE Avis (
-    id SERIAL PRIMARY KEY,
-    note INT CHECK (
-        note BETWEEN 1
-        AND 5
-    ),
-    utilisateur TEXT,
-    date_avis DATE,
-    commentaire_id VARCHAR(24),
-    -- Référence à MongoDB
-    hebergement_id INT REFERENCES Hebergement(id)
-);
+CREATE TABLE
+    Avis (
+        id SERIAL PRIMARY KEY,
+        note INT CHECK (note BETWEEN 1 AND 5),
+        utilisateur TEXT,
+        date_avis DATE,
+        commentaire_id TEXT, -- Référence à MongoDB
+        hebergement_id INT REFERENCES Hebergement (id) ON DELETE CASCADE
+    );
