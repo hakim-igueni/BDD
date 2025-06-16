@@ -1,8 +1,8 @@
--- 📄 create.sql — Définition des tables avec ON DELETE CASCADE
+--create.sql — Définition des tables avec ON DELETE CASCADE + contraintes UNIQUE
 CREATE TABLE
     Ville (
         id SERIAL PRIMARY KEY,
-        nom TEXT NOT NULL,
+        nom TEXT NOT NULL UNIQUE, -- Ville unique par nom
         latitude FLOAT,
         longitude FLOAT
     );
@@ -16,7 +16,8 @@ CREATE TABLE
         latitude FLOAT,
         longitude FLOAT,
         note NUMERIC,
-        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE
+        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE,
+        UNIQUE (nom, ville_id) -- Un hébergement unique par nom et ville
     );
 
 CREATE TABLE
@@ -26,7 +27,8 @@ CREATE TABLE
         description_courte TEXT,
         latitude FLOAT,
         longitude FLOAT,
-        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE
+        ville_id INT REFERENCES Ville (id) ON DELETE CASCADE,
+        UNIQUE (nom, ville_id) --  Un POI unique par nom et ville
     );
 
 CREATE TABLE
@@ -38,7 +40,8 @@ CREATE TABLE
         duree INT,
         date_debut DATE,
         date_fin DATE,
-        poi_id INT REFERENCES PointInteret (id) ON DELETE CASCADE
+        poi_id INT REFERENCES PointInteret (id) ON DELETE CASCADE,
+        UNIQUE (nom, poi_id) --  Une activité unique par nom et POI
     );
 
 CREATE TABLE
@@ -47,6 +50,7 @@ CREATE TABLE
         note INT CHECK (note BETWEEN 1 AND 5),
         utilisateur TEXT,
         date_avis DATE,
-        commentaire_id TEXT, -- Référence à MongoDB
-        hebergement_id INT REFERENCES Hebergement (id) ON DELETE CASCADE
+        commentaire_id TEXT UNIQUE, --  Clé MongoDB unique
+        hebergement_id INT REFERENCES Hebergement (id) ON DELETE CASCADE,
+        UNIQUE (utilisateur, hebergement_id) -- Un utilisateur ne note qu’un hébergement une fois
     );
