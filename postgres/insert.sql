@@ -1,4 +1,4 @@
--- Villes
+-- 1. Villes
 INSERT INTO
     Ville (nom, latitude, longitude)
 VALUES
@@ -9,7 +9,7 @@ VALUES
     ('Vancouver', 49.2827, -123.1207),
     ('Halifax', 44.6488, -63.5752);
 
--- Hebergements
+-- 2. Hébergements
 INSERT INTO
     Hebergement (
         nom,
@@ -76,7 +76,7 @@ VALUES
         5
     );
 
--- Points d'interet
+-- 3. Points d'intérêt
 INSERT INTO
     PointInteret (
         nom,
@@ -95,7 +95,7 @@ VALUES
     ),
     (
         'Chateau Frontenac',
-        'Hotel emblematique',
+        'Hotel emblématique',
         46.8120,
         -71.2050,
         2
@@ -109,7 +109,7 @@ VALUES
     ),
     (
         'Tour CN',
-        'Tour dobservation',
+        'Tour d\'observation',
         43.6426,
         -79.3871,
         4
@@ -129,7 +129,7 @@ VALUES
         6
     );
 
--- Activites
+-- 4. Activités
 INSERT INTO
     Activite (
         nom,
@@ -143,7 +143,7 @@ INSERT INTO
 VALUES
     (
         'Visite guidee Vieux-Montreal',
-        'Decouverte historique a pied',
+        'Découverte historique à pied',
         20.00,
         90,
         '2025-04-01',
@@ -152,7 +152,7 @@ VALUES
     ),
     (
         'Spectacle Chateau Frontenac',
-        'Soiree artistique',
+        'Soirée artistique',
         55.00,
         120,
         '2025-05-15',
@@ -161,7 +161,7 @@ VALUES
     ),
     (
         'Visite parlement',
-        'Decouverte politique canadienne',
+        'Découverte politique',
         0.00,
         60,
         '2025-03-01',
@@ -179,7 +179,7 @@ VALUES
     ),
     (
         'Balade velo Stanley Park',
-        'Nature et detente',
+        'Nature et détente',
         15.00,
         120,
         '2025-05-01',
@@ -196,7 +196,7 @@ VALUES
         6
     );
 
--- Avis
+-- 5. Avis (reviews metadata)
 INSERT INTO
     Avis (
         note,
@@ -248,3 +248,50 @@ VALUES
         '6650a1a6a6a6a6a6a6a6a6a6',
         6
     );
+
+-- 6. Voyages
+INSERT INTO
+    Voyage (date_debut, date_fin)
+VALUES
+    ('2025-08-01', '2025-08-10'), -- Voyage 1
+    ('2025-09-15', '2025-09-17');
+
+-- Voyage 2 (dernier jour 2025-09-17)
+-- 7. Étapes
+-- Voyage 1 : Montréal (1er août) + Québec (2 août, dernière étape → hebergement_id NULL)
+INSERT INTO
+    Etape (date, ville_id, hebergement_id, voyage_id)
+VALUES
+    ('2025-08-01', 1, 1, 1),
+    ('2025-08-02', 2, NULL, 1);
+
+-- Voyage 2 : Ottawa → Toronto → Vancouver (dernière étape sans hébergement)
+INSERT INTO
+    Etape (date, ville_id, hebergement_id, voyage_id)
+VALUES
+    ('2025-09-15', 3, 4, 2),
+    ('2025-09-16', 4, 5, 2),
+    ('2025-09-17', 5, NULL, 2);
+
+-- 8. Associations Étape ↔ PointInteret (POI possibles)
+INSERT INTO
+    Etape_POI (etape_id, poi_id)
+VALUES
+    (1, 1), -- Vieux-Montréal pour l'étape 1
+    (2, 2), -- Château Frontenac pour l'étape 2
+    (3, 3), -- Parlement pour l'étape 3
+    (4, 4), -- Tour CN pour l'étape 4
+    (5, 5);
+
+-- Stanley Park pour l'étape 5
+-- 9. Associations Étape ↔ Activite (Activités planifiées)
+INSERT INTO
+    Etape_Activite (etape_id, activite_id)
+VALUES
+    (1, 1), -- Visite guidée Vieux-Montréal
+    (2, 2), -- Spectacle Château Frontenac
+    (3, 3), -- Visite parlement
+    (4, 4), -- Ascension Tour CN
+    (5, 5);
+
+-- Balade vélo Stanley Park
