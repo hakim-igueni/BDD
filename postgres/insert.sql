@@ -1,3 +1,4 @@
+-- insert.sql — Peuplement complet (Option 2 : séquences automatiques)
 -- 1. Villes
 INSERT INTO
     Ville (nom, latitude, longitude)
@@ -109,7 +110,7 @@ VALUES
     ),
     (
         'Tour CN',
-        'Tour d\'observation',
+        'Tour dobservation',
         43.6426,
         -79.3871,
         4
@@ -143,7 +144,7 @@ INSERT INTO
 VALUES
     (
         'Visite guidee Vieux-Montreal',
-        'Découverte historique à pied',
+        'Decouverte historique a pied',
         20.00,
         90,
         '2025-04-01',
@@ -152,7 +153,7 @@ VALUES
     ),
     (
         'Spectacle Chateau Frontenac',
-        'Soirée artistique',
+        'Soiree artistique',
         55.00,
         120,
         '2025-05-15',
@@ -161,7 +162,7 @@ VALUES
     ),
     (
         'Visite parlement',
-        'Découverte politique',
+        'Decouverte politique canadienne',
         0.00,
         60,
         '2025-03-01',
@@ -179,7 +180,7 @@ VALUES
     ),
     (
         'Balade velo Stanley Park',
-        'Nature et détente',
+        'Nature et detente',
         15.00,
         120,
         '2025-05-01',
@@ -253,45 +254,35 @@ VALUES
 INSERT INTO
     Voyage (date_debut, date_fin)
 VALUES
-    ('2025-08-01', '2025-08-10'), -- Voyage 1
+    ('2025-08-01', '2025-08-10'),
     ('2025-09-15', '2025-09-17');
 
--- Voyage 2 (dernier jour 2025-09-17)
 -- 7. Étapes
--- Voyage 1 : Montréal (1er août) + Québec (2 août, dernière étape → hebergement_id NULL)
 INSERT INTO
     Etape (date, ville_id, hebergement_id, voyage_id)
 VALUES
     ('2025-08-01', 1, 1, 1),
-    ('2025-08-02', 2, NULL, 1);
-
--- Voyage 2 : Ottawa → Toronto → Vancouver (dernière étape sans hébergement)
-INSERT INTO
-    Etape (date, ville_id, hebergement_id, voyage_id)
-VALUES
+    ('2025-08-02', 2, NULL, 1),
     ('2025-09-15', 3, 4, 2),
     ('2025-09-16', 4, 5, 2),
     ('2025-09-17', 5, NULL, 2);
 
--- 8. Associations Étape ↔ PointInteret (POI possibles)
+-- 8. Associations Étape ↔ PointInteret
 INSERT INTO
     Etape_POI (etape_id, poi_id)
 VALUES
-    (1, 1), -- Vieux-Montréal pour l'étape 1
-    (2, 2), -- Château Frontenac pour l'étape 2
-    (3, 3), -- Parlement pour l'étape 3
-    (4, 4), -- Tour CN pour l'étape 4
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
     (5, 5);
 
--- Stanley Park pour l'étape 5
--- 9. Associations Étape ↔ Activite (Activités planifiées)
+-- 9. Associations Étape ↔ Activite
 INSERT INTO
     Etape_Activite (etape_id, activite_id)
 VALUES
-    (1, 1), -- Visite guidée Vieux-Montréal
-    (2, 2), -- Spectacle Château Frontenac
-    (3, 3), -- Visite parlement
-    (4, 4), -- Ascension Tour CN
+    (1, 1),
+    (2, 2),
+    (3, 3),
+    (4, 4),
     (5, 5);
-
--- Balade vélo Stanley Park

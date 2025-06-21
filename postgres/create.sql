@@ -69,7 +69,7 @@ CREATE TABLE
         id SERIAL PRIMARY KEY,
         date DATE NOT NULL,
         ville_id INT NOT NULL REFERENCES Ville (id) ON DELETE RESTRICT,
-        hebergement_id INT NOT NULL REFERENCES Hebergement (id) ON DELETE RESTRICT,
+        hebergement_id INT REFERENCES Hebergement (id) ON DELETE RESTRICT,
         voyage_id INT NOT NULL REFERENCES Voyage (id) ON DELETE CASCADE
     );
 
