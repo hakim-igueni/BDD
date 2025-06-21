@@ -54,3 +54,37 @@ CREATE TABLE
         hebergement_id INT REFERENCES Hebergement (id) ON DELETE CASCADE,
         UNIQUE (utilisateur, hebergement_id) -- Un utilisateur ne note qu’un hébergement une fois
     );
+
+-- 6. Table des Voyages
+CREATE TABLE
+    Voyage (
+        id SERIAL PRIMARY KEY,
+        date_debut DATE NOT NULL,
+        date_fin DATE NOT NULL
+    );
+
+-- 7. Table des Étapes
+CREATE TABLE
+    Etape (
+        id SERIAL PRIMARY KEY,
+        date DATE NOT NULL,
+        ville_id INT NOT NULL REFERENCES Ville (id) ON DELETE RESTRICT,
+        hebergement_id INT NOT NULL REFERENCES Hebergement (id) ON DELETE RESTRICT,
+        voyage_id INT NOT NULL REFERENCES Voyage (id) ON DELETE CASCADE
+    );
+
+-- 8. Association Étape ↔ PointInteret (plusieurs POI possibles par étape)
+CREATE TABLE
+    Etape_POI (
+        etape_id INT NOT NULL REFERENCES Etape (id) ON DELETE CASCADE,
+        poi_id INT NOT NULL REFERENCES PointInteret (id),
+        PRIMARY KEY (etape_id, poi_id)
+    );
+
+-- 9. Association Étape ↔ Activite (activités planifiées pour chaque étape)
+CREATE TABLE
+    Etape_Activite (
+        etape_id INT NOT NULL REFERENCES Etape (id) ON DELETE CASCADE,
+        activite_id INT NOT NULL REFERENCES Activite (id),
+        PRIMARY KEY (etape_id, activite_id)
+    );
